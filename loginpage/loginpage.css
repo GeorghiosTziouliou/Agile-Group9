@@ -22,13 +22,16 @@ body {
 
 .form-signin input[type="email"] {
   margin-bottom: 5px;
-  border-bottom-right-radius: 1em 1em;
-  border-bottom-left-radius: 1em 1em;
-  border-bottom-style:inset;
+  outline-style: none ;
+   border: 1px solid #ccc;
+   border-radius: 3px;
 }
 
 .form-signin input[type="password"] {
   margin-bottom: 10px;
-  border-top-left-radius: 1em 1em;
-  border-top-right-radius: 1em 1em;
+  outline-style: none ;
+   border: 1px solid #ccc;
+   border-radius: 3px;
 }
+
+a{text-decoration:none}
