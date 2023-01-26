@@ -5,9 +5,12 @@ const PORT = 8800;
 const rateLimiter = require('rate-limiter-flexible');
 const nodemailer = require('nodemailer');
 const validator = require('email-validator');
+<<<<<<< Updated upstream
 const { config } = require('dotenv');
+=======
+const sql = require("tedious")
+>>>>>>> Stashed changes
 require('dotenv').config();
-
 
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.json())
@@ -23,6 +26,18 @@ app.get('/dist/css/main.css',(req, res)=>{
     res.sendFile(path.join(__dirname, '/dist/css/main.css'));
     }
 );
+app.get('/loginpage/loginpage.html',(req, res)=>{
+    res.sendFile(path.join(__dirname, '/loginpage/loginpage.html'));
+    }
+);
+app.get('/loginpage/loginpage.css',(req, res)=>{
+    res.sendFile(path.join(__dirname, '/loginpage/loginpage.css'));
+    }
+);
+app.get('/loginpage/littleGreenLogo_180x.webp',(req, res)=>{
+    res.sendFile(path.join(__dirname, '/loginpage/littleGreenLogo_180x.webp'));
+    }
+);
 app.get('/dist/js/app.js',(req, res) =>{
     res.sendFile(path.join(__dirname, 'dist/js/app.js'));
     }
@@ -33,6 +48,9 @@ app.get('/dist/js/uikit.js',(req, res)=>{
 );
 app.get('/src/js/uikit.js',(req, res) => {
     res.sendFile(path.join(__dirname, '/src/js/uikit.js'));
+});
+app.get('/src/js/login.js',(req, res) => {
+    res.sendFile(path.join(__dirname, '/src/js/login.js'));
 });
 //alow user to send upto 100 messages under an hour
 const limiter = new rateLimiter.RateLimiterMemory({
@@ -76,7 +94,7 @@ app.post('/mail', async (req, res) => {
                 service: 'gmail',
                 auth: {
                     user: process.env.EMAIL,
-                    pass: process.env.Pass
+                    pass: process.env.Email_Pass
                 }
         });
         let emailOption = {
@@ -105,6 +123,41 @@ app.post('/mail', async (req, res) => {
     }
 });
 
+<<<<<<< Updated upstream
+=======
+const config_db = {
+    server: process.env.DB_SERVER,
+    authentication: {
+        type: 'default',
+        options: {
+            userName: process.env.DB_USER,
+            password: process.env.DB_PASS,
+            database: process.env.DB_NAME,
+            encrypt:true
+    }
+}
+};
+
+app.get('/login',(req,res) => {
+    const connection = new sql.ConnectionPool(config_db);
+    connection.connect().then(() => {
+        const request = new sql.Request(connection);
+        request.query('SELECT * FROM users', (err, result) => {
+            if(err){
+                console.log("error: ", err);
+                res.status(500).json({message: 'Internal server error'});
+                return;
+            }
+            else{
+                console.log("success: ", result);
+                res.status(200).json({message: 'success'});
+                return;
+            }
+        })
+    })
+})
+
+>>>>>>> Stashed changes
 
 
 app.listen(PORT, () => {
