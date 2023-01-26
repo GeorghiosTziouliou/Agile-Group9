@@ -5,6 +5,7 @@ const PORT = 8800;
 const rateLimiter = require('rate-limiter-flexible');
 const nodemailer = require('nodemailer');
 const validator = require('email-validator');
+const { config } = require('dotenv');
 require('dotenv').config();
 
 
@@ -103,6 +104,8 @@ app.post('/mail', async (req, res) => {
         return;
     }
 });
+
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
