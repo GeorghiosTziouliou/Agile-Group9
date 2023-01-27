@@ -5,11 +5,7 @@ const PORT = 8800;
 const rateLimiter = require('rate-limiter-flexible');
 const nodemailer = require('nodemailer');
 const validator = require('email-validator');
-<<<<<<< Updated upstream
-const { config } = require('dotenv');
-=======
 const sql = require("tedious")
->>>>>>> Stashed changes
 require('dotenv').config();
 
 app.use(express.static(path.join(__dirname, 'dist')));
@@ -123,20 +119,7 @@ app.post('/mail', async (req, res) => {
     }
 });
 
-<<<<<<< Updated upstream
-=======
-const config_db = {
-    server: process.env.DB_SERVER,
-    authentication: {
-        type: 'default',
-        options: {
-            userName: process.env.DB_USER,
-            password: process.env.DB_PASS,
-            database: process.env.DB_NAME,
-            encrypt:true
-    }
-}
-};
+
 
 app.get('/login',(req,res) => {
     const connection = new sql.ConnectionPool(config_db);
@@ -157,7 +140,6 @@ app.get('/login',(req,res) => {
     })
 })
 
->>>>>>> Stashed changes
 
 
 app.listen(PORT, () => {
