@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css?family=Leckerli+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css" />
   <script src="js/uikit.js"></script>
+  <script src="/src/js/subscribe.js"></script>
 </head>
 
 <body>
@@ -563,13 +564,13 @@
       </div>
       <div class="uk-margin-medium-top">
         <div data-uk-scrollspy="cls: uk-animation-slide-bottom; repeat: true">
-          <form>
+          <form id="Subscribe">
             <div class="uk-grid-small" data-uk-grid>
               <div class="uk-width-1-1 uk-width-expand@s uk-first-column">
-                <input type="email" placeholder="Email Address" class="uk-input uk-form-large uk-width-1-1 uk-border-pill">
+                <input type="email" name="email" placeholder="Email Address" class="uk-input uk-form-large uk-width-1-1 uk-border-pill">
               </div>
               <div class="uk-width-1-1 uk-width-auto@s">
-                <input type="submit" value="Subscribe" class="uk-button uk-button-large uk-button-warning">
+                <input type="submit" name="submit" id="submit" value="Subscribe" class="uk-button uk-button-large uk-button-warning">
               </div>
             </div>
           </form>
@@ -664,5 +665,4 @@
 </div>
 
 </body>
-
 </html>

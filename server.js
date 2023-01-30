@@ -33,6 +33,9 @@ app.get('/dist/js/uikit.js',(req, res)=>{
 app.get('/src/js/uikit.js',(req, res) => {
     res.sendFile(path.join(__dirname, '/src/js/uikit.js'));
 });
+app.get('/src/js/subscribe.js',(req, res) => {
+    res.sendFile(path.join(__dirname, '/src/js/subscribe.js'));
+});
 //alow user to send upto 100 messages under an hour
 const limiter = new rateLimiter.RateLimiterMemory({
     points: 100,
