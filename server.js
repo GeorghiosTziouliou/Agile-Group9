@@ -66,38 +66,134 @@ app.post('/details', (req,res) =>{
         console.log('No id provided');
     }
     console.log(id);
-    //connect to the database
-    db.connect(config, (err) => {
-        if (err){
-            console.error('Error connecting to database:', err);
-            return res.status(500).send({ error: 'Internal server error' });
-        }
-        console.log('Connected to database');
-        //create a new request object
-        let sqlRequest = new db.Request();
+    getRecipeDetails(id, res);
+});
+
+
+    
         //query the database and get the records
-        let sqlQuery = "Select * From Recipes Where RecipeID = '" + id + "'";
-        sqlRequest.query(sqlQuery, function(err, data){
-            if (err) {
+        async function getRecipeDetails(id, res){
+            try {
+                await db.connect(config);
+                console.log('Connected to database');
+                //create a new request object
+                let sqlRequest = new db.Request();
+
+                let sqlQuery = "Select * From Recipes Where RecipeID = '" + id + "'";
+                const recipeData = await sqlRequest.query(sqlQuery);
+                const Recipes = recipeData.recordset.map(async recipe=>{
+                    const resizedImage = await sharp(recipe.image).resize(600,600).toBuffer();
+                    recipe.image = Buffer.from(resizedImage).toString('base64');
+                    return recipe;
+                })
+                const recipeDataEdited = await Promise.all(Recipes)
+                let sqlQuery2 = "Select * From RecipeIngredients Where RecipeID = '" + id + "'";
+                const ingredientData = await sqlRequest.query(sqlQuery2);
+                const Ingredients = ingredientData.recordset
+
+                const ingredientPromises = Ingredients.map(async item=>{
+                    const ingredientIDs = item.IngredientID;
+                    let sqlQuery3 = "Select * From Ingredients Where IngredientID = '" + ingredientIDs + "'";
+                    const ingredientDetails = await sqlRequest.query(sqlQuery3);
+                    return ingredientDetails.recordset;
+                });
+                const ingredientDetails = await Promise.all(ingredientPromises);
+                const results ={
+                    recipeData: recipeDataEdited,
+                    ingredientDetails
+                };
+                console.log(results);
+                return res.status(200).send(results);
+            
+        }
+            catch(err){
                 console.error('Error querying database:', err);
                 return res.status(500).send({ error: 'Internal server error' });
             }
-            const Recipes = data.recordset.map(async recipe=>{
-                const resizedImage = await sharp(recipe.image).resize(600,600).toBuffer();
-                recipe.image = Buffer.from(resizedImage).toString('base64');
-                return recipe;
-            })
-            Promise.all(Recipes)
-            .then(Recipes => {
-                console.log(Recipes)
-                res.status(200).send(Recipes);
-                db.close();
-            });
-            
         }
-        );
-    });
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// //connect to the database
+// db.connect (config, (err) => {
+//     if (err){
+//     console.error('Error connecting to database:', err);
+//     return res.status(500).send({ error: 'Internal server error' });
+//       }
+//    console.log('Connected to database');
+//    //create a new request object
+//    let sqlRequest = new db.Request();
+
+        // let sqlQuery = "Select * From Recipes Where RecipeID = '" + id + "'";
+        // sqlRequest.query(sqlQuery, function(err, data){
+        //     if (err) {
+        //         console.error('Error querying database:', err);
+        //         return res.status(500).send({ error: 'Internal server error' });
+        //     }
+        //     const Recipes = data.recordset.map(async recipe=>{
+        //         const resizedImage = await sharp(recipe.image).resize(600,600).toBuffer();
+        //         recipe.image = Buffer.from(resizedImage).toString('base64');
+        //         return recipe;
+        //     })
+        //     Promise.all(Recipes)
+        //     .then(Recipes => {
+        //         let sqlQuery2 = "Select * From RecipeIngredients Where RecipeID = '" + id + "'";
+        //         sqlRequest.query(sqlQuery2, function(err, data){
+        //             if (err) {
+        //                 console.error('Error querying database:', err);
+        //                 return res.status(500).send({ error: 'Internal server error' });
+        //             }
+        //             const Ingredients = data.recordset
+        //             Ingredients.forEach(item =>{
+        //                 const ingredientIDs = item.IngredientID;
+        //                 console.log(ingredientIDs);
+        //                 let sqlQuery3 = "Select * From Ingredients Where IngredientID = '" + ingredientIDs + "'";
+        //                 sqlRequest.query(sqlQuery3, function(err, data){
+        //                     if (err) {
+        //                         console.error('Error querying database:', err);
+        //                         return res.status(500).send({ error: 'Internal server error' });
+        //                     }
+        //                     const result = {
+        //                         recipe: Recipes,
+        //                         ingredients: data.recordset
+        //                     }
+        //                     while(!ingredientIDs){
+        //                         responseSent = true;
+        //                         return res.status(200).send(result);
+        //                     }
+        //                     if (responseSent){
+        //                         return;
+                                
+        //                     } 
+        //                         console.log("#########################################################################");
+        //                         console.log(result);
+        //                 })
+
+        //             })
+        //         })
+        //     });
+        // }); 
+// });
+// });
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/views/index.ejs'));
