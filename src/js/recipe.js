@@ -15,14 +15,19 @@ fetch('/details', {
 })
 .then(res => res.json())
 .then(data => {
-    console.log(data);
-    const recipe = data;
+   console.log(data);
+    const recipe_data = data.recipeData;
+    const ingredient_data = data.ingredientDetails;
+    console.log(recipe_data);
+    console.log(ingredient_data);
     const recipe_name = document.querySelector('#detailed-pg');
     const section2 = document.querySelector('#steps')
-    recipe.forEach(element => {
+    const section3 = document.querySelector('#ingredients')
+    recipe_data.forEach(element => {
       const resizedImage = `data:image/png;base64,${element.image}`;
         let html = '';
         let html2 = '';
+        let html3 = '';
         if(element.RecipeID == recipe_id){
             try{
                 html +=`
@@ -91,6 +96,15 @@ fetch('/details', {
     `;
     section2.innerHTML = html2;
     }
+    // let IngredientName = [];
+    ingredient_data.forEach(ingredientArray => {
+      ingredientArray.forEach(ingredient =>{
+        html3 += `
+          <li>${ingredient.IngredientName}</li>
+    `;
+    section3.innerHTML = html3;
+      })
+    });
     }
             catch(err){
                 console.log(err);
