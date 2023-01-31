@@ -4761,6 +4761,14 @@ ul.uk-nav-sub {
   position: relative;
 }
 
+/*
+ * Background colour on tab hover (About Us page)
+ */
+.uk-tab-nav > li > a:hover {
+  background-color: #1c8b18;
+}
+
+
 /* Items
  ========================================================================== */
 /*
