@@ -5,34 +5,111 @@ const PORT = 8800;
 const rateLimiter = require('rate-limiter-flexible');
 const nodemailer = require('nodemailer');
 const validator = require('email-validator');
+const bycrypt = require('bcrypt');
+const tedious = require('tedious');
+const db = require('mssql');
+// const connection = require('mssql')
 require('dotenv').config();
-
 
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.json())
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist/index.html'));
+const config = {
+    user:'CloudSAddeb947e',
+    password: 'agile-projectG9',
+    server: 'agile-project.database.windows.net',
+    database: 'agile',
+port: 1433
+}
+
+app.get('/recipes', (req, res) => {
+    db.connect(config, (err) => {
+      if (err) {
+        console.error('Error connecting to database:', err);
+        return res.status(500).send({ error: 'Error connecting to database' });
+      }
+      console.log('Connected to database');
+      //create a new request object
+      let sqlRequest = new db.Request();
+      //query the database and get the records
+      let sqlQuery = 'Select * From Recipes';
+      sqlRequest.query(sqlQuery, function(err, data){
+        if (err) {
+          console.error('Error querying database:', err);
+          return res.status(500).send({ error: 'Error querying database' });
+        }
+        // console.table(data.recordset);
+        res.status(200).send(data.recordset);
+        // console.log(data);
+        db.close();
+      });
+    });
+  });
+app.post('/details', (req,res) =>{
+    //receive the product id from the client
+    const id = parseInt(req.body.id, 10);
+    if(!id){
+        console.log('No id provided');
     }
-);
+    console.log(id);
+    //connect to the database
+    db.connect(config, (err) => {
+        if (err){
+            console.error('Error connecting to database:', err);
+            return res.status(500).send({ error: 'Internal server error' });
+        }
+        console.log('Connected to database');
+        //create a new request object
+        let sqlRequest = new db.Request();
+        //query the database and get the records
+        let sqlQuery = "Select * From Recipes Where RecipeID = '" + id + "'";
+        sqlRequest.query(sqlQuery, function(err, data){
+            if (err) {
+                console.error('Error querying database:', err);
+                return res.status(500).send({ error: 'Internal server error' });
+            }
+            else{
+                console.log('Success');
+                res.status(200).send(data.recordset);
+                db.close();
+            }
+            
+        }
+        );
+    });
+});
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist/views/index.ejs'));
+});
 app.get('/contact.html', (req, res) =>{
     res.sendFile(path.join(__dirname, '/dist/contact.html'));
 })
 app.get('/dist/css/main.css',(req, res)=>{
     res.sendFile(path.join(__dirname, '/dist/css/main.css'));
-    }
-);
+});
 app.get('/dist/js/app.js',(req, res) =>{
     res.sendFile(path.join(__dirname, 'dist/js/app.js'));
     }
 );
 app.get('/dist/js/uikit.js',(req, res)=>{
     res.sendFile(path.join(__dirname, '/dist/js/uikit.js'));
-    }
-);
+});
 app.get('/src/js/uikit.js',(req, res) => {
     res.sendFile(path.join(__dirname, '/src/js/uikit.js'));
 });
+app.get('/src/js/subscribe.js',(req, res) => {
+    res.sendFile(path.join(__dirname, '/src/js/subscribe.js'));
+});
+app.get('/src/js/login.js',(req, res) => {
+    res.sendFile(path.join(__dirname, '/src/js/login.js'));
+});
+app.get('/src/js/index.js',(req, res) => {
+    res.sendFile(path.join(__dirname, '/src/js/index.js'));
+});
+app.get('/src/js/recipe.js',(req, res) => {
+    res.sendFile(path.join(__dirname, '/src/js/recipe.js'));
+});   
 //alow user to send upto 100 messages under an hour
 const limiter = new rateLimiter.RateLimiterMemory({
     points: 100,
