@@ -11,12 +11,13 @@ fetch('/recipes', {
     const recipe = data;
     const recipeList = document.querySelector('#recipe-list');
     recipe.forEach(recipe => {
+        const resizedImage = `data:image/png;base64,${recipe.image}`;
         let html = '';
         try{
             html += `<div>
             <div class="uk-card">
               <div class="uk-card-media-top uk-inline uk-light">
-                <img class="uk-border-rounded-medium" src="https://via.placeholder.com/300x160" alt="Course Title">
+                <img class="uk-border-rounded-medium" src="${resizedImage}" alt="Course Title">
                 <div class="uk-position-cover uk-card-overlay uk-border-rounded-medium"></div>
                 <div class="uk-position-xsmall uk-position-top-right">
                   <a href="#" class="uk-icon-button uk-like uk-position-z-index uk-position-relative"

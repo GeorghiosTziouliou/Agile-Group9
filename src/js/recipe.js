@@ -20,6 +20,7 @@ fetch('/details', {
     const recipe_name = document.querySelector('#detailed-pg');
     const section2 = document.querySelector('#steps')
     recipe.forEach(element => {
+      const resizedImage = `data:image/png;base64,${element.image}`;
         let html = '';
         let html2 = '';
         if(element.RecipeID == recipe_id){
@@ -27,7 +28,7 @@ fetch('/details', {
                 html +=`
                 <div data-uk-grid>
     <div class="uk-width-1-2@s">
-      <div><img class="uk-border-rounded-large" src="https://via.placeholder.com/600x600" 
+      <div><img class="uk-border-rounded-large" src="${resizedImage}" 
         alt="Image alt"></div>
     </div>
     <div class="uk-width-expand@s uk-flex uk-flex-middle">

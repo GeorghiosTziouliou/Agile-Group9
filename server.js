@@ -8,6 +8,8 @@ const validator = require('email-validator');
 const bycrypt = require('bcrypt');
 const tedious = require('tedious');
 const db = require('mssql');
+const Buffer = require('buffer').Buffer;
+const sharp = require('sharp');
 // const connection = require('mssql')
 require('dotenv').config();
 
@@ -38,13 +40,25 @@ app.get('/recipes', (req, res) => {
           console.error('Error querying database:', err);
           return res.status(500).send({ error: 'Error querying database' });
         }
-        // console.table(data.recordset);
-        res.status(200).send(data.recordset);
-        // console.log(data);
-        db.close();
+        const Recipes = data.recordset.map(async recipe=>{
+            const resizedImage = await sharp(recipe.image).resize(300,160).toBuffer();
+            recipe.image = Buffer.from(resizedImage).toString('base64');
+            return recipe;
+        })
+        Promise.all(Recipes)
+        .then(Recipes => {
+            console.log(Recipes)
+            res.status(200).send(Recipes);
+            db.close();
+        })
+        .catch(err => {
+            console.error('Error querying database:', err);
+            return res.status(500).send({ error: 'Error querying database' });
+        });
       });
     });
   });
+
 app.post('/details', (req,res) =>{
     //receive the product id from the client
     const id = parseInt(req.body.id, 10);
@@ -68,11 +82,17 @@ app.post('/details', (req,res) =>{
                 console.error('Error querying database:', err);
                 return res.status(500).send({ error: 'Internal server error' });
             }
-            else{
-                console.log('Success');
-                res.status(200).send(data.recordset);
+            const Recipes = data.recordset.map(async recipe=>{
+                const resizedImage = await sharp(recipe.image).resize(600,600).toBuffer();
+                recipe.image = Buffer.from(resizedImage).toString('base64');
+                return recipe;
+            })
+            Promise.all(Recipes)
+            .then(Recipes => {
+                console.log(Recipes)
+                res.status(200).send(Recipes);
                 db.close();
-            }
+            });
             
         }
         );
