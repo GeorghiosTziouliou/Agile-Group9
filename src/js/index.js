@@ -1,4 +1,3 @@
-
 fetch('/recipes', {
     method: 'GET',
     headers: {
