@@ -50,7 +50,7 @@
         </div>
       </nav>
 
-      <!--Company Description-->
+      <!-- Company Description
       <div class="uk-container">
         <div class="uk-border-rounded-large uk-background-top-center uk-background-cover 
           uk-background-norepeat uk-light uk-inline uk-overflow-hidden uk-width-1-1" 
@@ -82,7 +82,36 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>>
+    -->
+
+<!-- Tab panes -->
+<div class="uk-container uk-margin-top uk-margin-bottom">
+
+    <ul class="uk-tab uk-flex-center" data-uk-tab>
+        <li class="uk-active"><a href="#mission-statement">Mission Statement</a></li>
+        <li><a href="#founder">Founder</a></li>
+        <li><a href="#meet-the-team">Meet the Team</a></li>
+      </ul>
+  </div>
+  
+    <script>
+        const tabLinks = document.querySelectorAll(".tab-link");
+        const tabContents = document.querySelectorAll(".tab-content");
+
+        tabLinks.forEach(link => {
+            link.addEventListener("click", function () {
+                const tabName = this.dataset.tab;
+                tabContents.forEach(content => {
+                    content.style.display = "none";
+                });
+                document.getElementById(tabName).style.display = "block";
+            });
+        });
+        // Select the first tab by default
+        tabLinks[0].click();
+    </script>
+
 
       <!--The footer-->
       <footer class="uk-section uk-section-default">
