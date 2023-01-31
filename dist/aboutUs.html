@@ -95,29 +95,46 @@
 
         <ul class="uk-tab uk-flex-center" data-uk-tab>
             <li class="uk-active"><a href="#mission-statement">Mission Statement</a></li>
-            <li><a href="#founder">Founder</a></li>
-            <li><a href="#meet-the-team">Meet the Team</a></li>
+            <li class="uk-active"><a href="#founder">Founder</a></li>
+            <li class="uk-active"><a href="#meet-the-team">Meet the Team</a></li>
         </ul>
         <ul class="uk-switcher uk-margin">
             <li id="mission-statement">
-                <p>Our Vision is to make zero waste shopping easy and affordable with sustainable choices the most
-                    convenient choice. We supply high quality reusable and sustainable products along with refillable
-                    products from suppliers who share the same values as we do.</p>
-                <p>Our mission is to inspire and educate while providing an enjoyable and non-judgemental shopping
-                    experience. We are a more than profit company who is dedicated to giving back to our local community
+                <!--<h6 style="color: #1c8b18;">About The Little Green Larder</h6>-->
+                <h1 style="color: #1c8b18;">Our Mission</h1>
+                <h3 style="color: #1c8b18;">Mission</h3>
+                <p>We aim to inspire and educate while providing an enjoyable and non-judgemental shopping
+                    experience. We are a more than profit company who is dedicated to giving back to our local
+                    community
                     and local charities.</p>
+                <h3 style="color: #1c8b18;">Vision</h3>
+                <p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                    We want to make zero waste shopping easy and affordable with sustainable choices the most
+                    convenient choice. We supply high quality reusable and sustainable products along with
+                    refillable products from suppliers who share the same values as we do.
+                </p>
+                <h3 style="color: #1c8b18;">Core Values</h3>
                 <p>We may be small fish in the big pond of sustainability, however together with all of the other
                     independent zero waste shops we are making a big difference.</p>
-            </li>
-            <li id="founder">
-                <p>Placeholder text</p>
-            </li>
-            <li id="meet-the-team">
-                <p>Placeholder text</p>
             </li>
         </ul>
     </div>
 
+    <script>
+        const missionTab = document.querySelector("#mission-statement");
+        const tabs = document.querySelectorAll(".uk-tab a");
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", function () {
+            if (tab.hash === "#mission-statement") {
+              missionTab.style.display = "block";
+            } else {
+              missionTab.style.display = "none";
+            }
+          });
+        });
+      </script>
+      
+<!--
     <script>
         const missionTab = document.querySelector('#mission-statement');
         const founderTab = document.querySelector('#founder');
@@ -141,6 +158,7 @@
             });
         });
     </script>
+-->
 
 
     <!--The footer-->
