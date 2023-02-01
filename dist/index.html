@@ -177,7 +177,7 @@
           <h2>Little Green Gallery</h2>
         </div>
       </div>
-      <div class="containerdisplay uk-child-width-1-2@s uk-overflow-auto uk-container">
+      <div id="scroll-container" class="containerdisplay uk-child-width-1-2@s uk-overflow-auto uk-container">
         <div>
           <div class="uk-card uk-card-video">
             <blockquote class="instagram-media"
@@ -751,6 +751,49 @@
       </div>
     </div>
   </div>
+  <script>
+    function scrollHorizontally(){
+      // Set the scroll speed
+      var scrollSpeed = 20;
+  
+      var intervalId = setInterval(function(){
+        var container = document.getElementById("scroll-container");
+        container.scrollLeft += scrollSpeed;
+      }, 1000);
+  
+      var container = document.getElementById("scroll-container");
+      container.addEventListener("mouseover",function(){
+        clearInterval(intervalId);
+      });
+      container.addEventListener("mouseout", function(){
+        intervalId = setInterval(function(){
+          container.scrollLeft += scrollSpeed;
+        }, 1000);
+      });
+    }
+    
+    var container = document.getElementById("scroll-container");
+    var target = container.scrollLeft + 100;
+  
+    function smoothScroll() {
+      container.scrollLeft += (target - container.scrollLeft) / 10;
+  
+      if (Math.abs(container.scrollLeft - target) < 1) {
+        return;
+      }
+  
+      requestAnimationFrame(smoothScroll);
+    }
+  
+    container.addEventListener("click", function() {
+      target = container.scrollLeft + 100;
+      smoothScroll();
+    });
+    
+    scrollHorizontally();
+  </script>
+  
+  
 
   <div class="uk-container">
     <div class="uk-background-primary uk-border-rounded-large uk-light">
