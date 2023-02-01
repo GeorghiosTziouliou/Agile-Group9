@@ -8,12 +8,13 @@
   <link rel="shortcut icon" type="image/png" href="img/favicon.png">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Leckerli+One&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@2.49.0/dist/full.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="css/main.css" />
   <script src="js/uikit.js"></script>
-  <script src="/src/js/subscribe.js"></script>
 </head>
 
-<body>
+<body class="bg-white">
 
 <nav class="uk-navbar-container uk-letter-spacing-small">
   <div class="uk-container">
@@ -50,7 +51,7 @@
     </div>
   </nav>
 
-<div class="uk-container">
+<div class="uk-container ">
   <div class="uk-border-rounded-large uk-background-top-center uk-background-cover 
     uk-background-norepeat uk-light uk-inline uk-overflow-hidden uk-width-1-1" 
     style="background-image: url(https://i.ibb.co/k3wXccC/Screenshot-2023-01-30-at-14-30-58); background-color: rgba(0, 135, 0, 1);">
@@ -65,10 +66,41 @@
             class="uk-margin-small-left" data-uk-icon="arrow-right"></span></a>
         </div>
       </div>
-      <div class="uk-width-expand@m">
+      <div class="uk-width-expand@m indicator">
+        <h3 id="status"></h3>
       </div>
     </div>
   </div>
+  <script>
+    function updateStatus() {
+      var status = document.getElementById("status");
+      var currentTime = new Date().getHours();
+      var currentDay = new Date().getDay();
+      var currentmins = new Date().getMinutes();
+      var mins = 60 - currentmins;
+      if(currentDay === 0){
+        status.innerHTML = "CLOSED";
+        status.className = "indicator-item rounded-start border-start-0 bg-black badge badge-secondary m-10 px-5 pl-4 p-4";
+      }
+      else if (currentTime >= 10 && currentTime < 18) {
+        status.innerHTML = "OPEN";
+        status.className = "indicator-item rounded-start border-start-0 bg-black badge badge-secondary m-10 px-5 pl-4 p-4";
+      } else {
+        status.innerHTML = "CLOSED";
+        status.className = "indicator-item rounded-start border-start-0 bg-black badge badge-secondary m-10 px-5 pl-4 p-4";
+        if(currentTime >=9 && currentTime < 10){
+          status.innerHTML = "OPENS " + " " + "IN" + " " + mins.toString() + " " + "MINUTES";
+          status.className = "indicator-item rounded-start border-start-0 bg-black badge badge-secondary m-20 my-10 mx-10.0 pl-10.0 p-4 mr-6.0";
+        }else if(currentTime >=17 && currentTime <18){
+          status.innerHTML = "CLOSES " + " " + "IN" + " " + mins.toString() + " " + "MINUTES";
+          status.className = "indicator-item rounded-start border-start-0 bg-black badge badge-secondary m-20 my-10 mx-10.0 pl-10.0 p-4 mr-6.0";
+        }
+      }
+    }
+  
+    updateStatus();
+    setInterval(updateStatus, 1000);
+  </script>
 
   <div class="uk-section uk-section-default">
     <div class="uk-container">
@@ -761,7 +793,7 @@
         container.scrollLeft += scrollSpeed;
       }, 1000);
   
-      var container = document.getElementById("scroll-container");
+      var container = document.getElementById("containerInsta");
       container.addEventListener("mouseover",function(){
         clearInterval(intervalId);
       });
@@ -771,8 +803,19 @@
         }, 1000);
       });
     }
+    var wheel = document.getElementById("containerInsta");
+
+    wheel.addEventListener("mousewheel", function(event){
+    event.preventDefault();
+
+    if (event.deltaY > 0) {
+      wheel.scrollLeft += 10;
+    } else {
+      wheel.scrollLeft -= 10;
+    }
+});
     
-    var container = document.getElementById("scroll-container");
+    var container = document.getElementById("containerInsta");
     var target = container.scrollLeft + 100;
   
     function smoothScroll() {
@@ -806,13 +849,13 @@
           <div data-uk-scrollspy="cls: uk-animation-slide-bottom; repeat: true">
             <form id="Subscribe">
               <div class="uk-grid-small" data-uk-grid>
-                <div class="uk-width-1-1 uk-width-expand@s uk-first-column">
+                <div class="uk-width-1-1 uk-width-expand@s uk-first-column ">
                   <input type="email" name="email" placeholder="Email Address"
                     class="uk-input uk-form-large uk-width-1-1 uk-border-pill">
                 </div>
-                <div class="uk-width-1-1 uk-width-auto@s">
+                <div class="uk-width-1-1 uk-width-auto@s ">
                   <input type="submit" name="submit" id="submit" value="Subscribe"
-                    class="uk-button uk-button-large uk-button-warning">
+                    class="uk-button uk-button-large uk-button-warning uk-border-pill btn-warning">
                 </div>
               </div>
             </form>
