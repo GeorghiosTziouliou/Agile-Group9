@@ -47,12 +47,12 @@ app.get('/recipes', (req, res) => {
         })
         Promise.all(Recipes)
         .then(Recipes => {
-            console.log(Recipes)
+            console.log('Recipes successfully retrieved from database');
             res.status(200).send(Recipes);
             db.close();
         })
         .catch(err => {
-            console.error('Error querying database:', err);
+            console.error('Error querying database for Recipes:', err);
             return res.status(500).send({ error: 'Error querying database' });
         });
       });
@@ -99,7 +99,7 @@ app.post('/details', (req,res) =>{
                     recipeData: recipeDataEdited,
                     ingredientDetails
                 };
-                console.log(results);
+                console.log('Recipe details successfully retrieved from database');
                 return res.status(200).send(results);
             
         }
@@ -156,9 +156,6 @@ app.get('/dist/js/uikit.js',(req, res)=>{
 });
 app.get('/src/js/uikit.js',(req, res) => {
     res.sendFile(path.join(__dirname, '/src/js/uikit.js'));
-});
-app.get('/src/js/subscribe.js',(req, res) => {
-    res.sendFile(path.join(__dirname, '/src/js/subscribe.js'));
 });
 app.get('/src/js/login.js',(req, res) => {
     res.sendFile(path.join(__dirname, '/src/js/login.js'));
