@@ -47,12 +47,12 @@ app.get('/recipes', (req, res) => {
         })
         Promise.all(Recipes)
         .then(Recipes => {
-            console.log(Recipes)
+            console.log('Recipes successfully retrieved from database');
             res.status(200).send(Recipes);
             db.close();
         })
         .catch(err => {
-            console.error('Error querying database:', err);
+            console.error('Error querying database for Recipes:', err);
             return res.status(500).send({ error: 'Error querying database' });
         });
       });
@@ -68,9 +68,6 @@ app.post('/details', (req,res) =>{
     console.log(id);
     getRecipeDetails(id, res);
 });
-
-
-    
         //query the database and get the records
         async function getRecipeDetails(id, res){
             try {
@@ -102,7 +99,7 @@ app.post('/details', (req,res) =>{
                     recipeData: recipeDataEdited,
                     ingredientDetails
                 };
-                console.log(results);
+                console.log('Recipe details successfully retrieved from database');
                 return res.status(200).send(results);
             
         }
@@ -112,88 +109,34 @@ app.post('/details', (req,res) =>{
             }
         }
 
+//add users email to the tbl Subscriptions
+app.post('/subscribe', (req, res) => {
+    const email = req.body.email;
+    if(!validator.validate(email)){
+        return res.status(400).send({error: 'Invalid email address'});
+    }
+    db.connect(config, (err) => {
+        if (err) {
+            console.error('Error connecting to database:', err);
+            return res.status(500).send({ error: 'Error connecting to database' });
+        }
+        console.log('Connected to database');
+        //create a new request object
+        let sqlRequest = new db.Request();
+        //query the database and get the records
+        let sqlQuery = "INSERT INTO Subscriptions (Email) VALUES ('" + email + "')";
+        sqlRequest.query(sqlQuery, function(err, data){
+            if (err) {
+                console.error('Error querying database:', err);
+                return res.status(500).send({ error: 'Error querying database' });
+            }
+            console.log('Email added to database');
+            res.status(200).send({message: 'Success'});
+            db.close();
+        });
+    });
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// //connect to the database
-// db.connect (config, (err) => {
-//     if (err){
-//     console.error('Error connecting to database:', err);
-//     return res.status(500).send({ error: 'Internal server error' });
-//       }
-//    console.log('Connected to database');
-//    //create a new request object
-//    let sqlRequest = new db.Request();
-
-        // let sqlQuery = "Select * From Recipes Where RecipeID = '" + id + "'";
-        // sqlRequest.query(sqlQuery, function(err, data){
-        //     if (err) {
-        //         console.error('Error querying database:', err);
-        //         return res.status(500).send({ error: 'Internal server error' });
-        //     }
-        //     const Recipes = data.recordset.map(async recipe=>{
-        //         const resizedImage = await sharp(recipe.image).resize(600,600).toBuffer();
-        //         recipe.image = Buffer.from(resizedImage).toString('base64');
-        //         return recipe;
-        //     })
-        //     Promise.all(Recipes)
-        //     .then(Recipes => {
-        //         let sqlQuery2 = "Select * From RecipeIngredients Where RecipeID = '" + id + "'";
-        //         sqlRequest.query(sqlQuery2, function(err, data){
-        //             if (err) {
-        //                 console.error('Error querying database:', err);
-        //                 return res.status(500).send({ error: 'Internal server error' });
-        //             }
-        //             const Ingredients = data.recordset
-        //             Ingredients.forEach(item =>{
-        //                 const ingredientIDs = item.IngredientID;
-        //                 console.log(ingredientIDs);
-        //                 let sqlQuery3 = "Select * From Ingredients Where IngredientID = '" + ingredientIDs + "'";
-        //                 sqlRequest.query(sqlQuery3, function(err, data){
-        //                     if (err) {
-        //                         console.error('Error querying database:', err);
-        //                         return res.status(500).send({ error: 'Internal server error' });
-        //                     }
-        //                     const result = {
-        //                         recipe: Recipes,
-        //                         ingredients: data.recordset
-        //                     }
-        //                     while(!ingredientIDs){
-        //                         responseSent = true;
-        //                         return res.status(200).send(result);
-        //                     }
-        //                     if (responseSent){
-        //                         return;
-                                
-        //                     } 
-        //                         console.log("#########################################################################");
-        //                         console.log(result);
-        //                 })
-
-        //             })
-        //         })
-        //     });
-        // }); 
-// });
-// });
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/views/index.ejs'));
@@ -213,9 +156,6 @@ app.get('/dist/js/uikit.js',(req, res)=>{
 });
 app.get('/src/js/uikit.js',(req, res) => {
     res.sendFile(path.join(__dirname, '/src/js/uikit.js'));
-});
-app.get('/src/js/subscribe.js',(req, res) => {
-    res.sendFile(path.join(__dirname, '/src/js/subscribe.js'));
 });
 app.get('/src/js/login.js',(req, res) => {
     res.sendFile(path.join(__dirname, '/src/js/login.js'));
