@@ -12,11 +12,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 
 
-
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-light "style="background-color:green ">
+  <nav class="navbar navbar-expand-lg navbar-light"style="background-color:green ">
     
     <a class="navbar-brand" href="#">
       <img src="littleGreenLogo_180x.webp" alt="" width="70" height="50">
@@ -35,6 +34,7 @@
         <div>Admin Panel</div>
       </div>
     </div>
+
 
     <div class="navbar-nav ml-auto user">
       <a href="#" class="nav-item nav-link">
@@ -87,6 +87,7 @@
     function showForm() {
      window.open("Add-Recipe.html", "_self");
    }
+   
  </script>
 
 <table class="table">
@@ -98,24 +99,19 @@
       <th>Actions</th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <td>Recipe 1</td>
-      <td>Ingredient 1, Ingredient 2, Ingredient 3</td>
-      <td>List of steps</td>
-      <td>
-        <button class="btn btn-danger">Delete</button>
-        <button class="btn btn-secondary">Edit</button>
-      </td>
-    </tr>
+  <tbody id ="recipe-list">
+    
   </tbody>
 </table>
+
+
 </body>
 
 <footer class="text-white fixed-bottom"style="background-color:green">
   <div class="container">
       <p class="text-center" style="margin-top:10px;">Copyright © 2023 The Little Green Larder </p>
   </div>
+  <script src="/src/js/Admin.js"></script>
 </footer>
 
 </html>
