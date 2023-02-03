@@ -33,10 +33,9 @@ fetchPromise
 .then(data => {
     console.log(data);
     const recipe = data;
-    const perpage = 12;
-    const pages = recipe.slice(0, perpage);
     const recipeList = document.querySelector('#recipe-list');
-    pages.forEach(recipe => {
+    // const categories = document.querySelector('#categories');
+    recipe.forEach(recipe => {
         const resizedImage = `data:image/png;base64,${recipe.image}`;
         let html = '';
         try{
@@ -66,9 +65,9 @@ fetchPromise
           </div>`;
           recipeList.innerHTML += html;
         }
-  
         catch(err){
             console.log(err);
         }
     })
+    
     });

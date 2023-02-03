@@ -48,6 +48,9 @@ app.get('/recipes', (req, res) => {
         Promise.all(Recipes)
         .then(Recipes => {
             console.log('Recipes successfully retrieved from database');
+            console.log('##########################################');
+            console.log(Recipes);
+            console.log('##########################################');
             res.status(200).send(Recipes);
             db.close();
         })

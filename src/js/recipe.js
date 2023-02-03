@@ -63,11 +63,11 @@ fetch('/details', {
         <hr>
         <div data-uk-grid>
           <div class="uk-width-auto@s uk-text-small">
-            <p class="uk-margin-small-top uk-margin-remove-bottom">Created by <a href="#">Alex Williamns</a></p>
-            <span class="uk-text-muted">21 recipes</span>
+            <p class="uk-margin-small-top uk-margin-remove-bottom"><a href="#">Little Green</a></p>
+            <span class="uk-text-muted"></span>
           </div>
           <div class="uk-width-expand@s uk-flex uk-flex-middle uk-flex-right@s">
-            <a href="#" class="uk-icon-link" data-uk-icon="icon: plus-circle; ratio: 1.2" 
+            <a href="recipe.html?save=${element.RecipeID}" class="uk-icon-link" data-uk-icon="icon: plus-circle; ratio: 1.2" 
              data-uk-tooltip="title: Save Recipe"></a>
             <a href="#" class="uk-icon-link uk-margin-left" data-uk-icon="icon: cart; ratio: 1.2" 
              data-uk-tooltip="title: Shopping List"></a>
