@@ -23,11 +23,14 @@ fetch('/details', {
     const recipe_name = document.querySelector('#detailed-pg');
     const section2 = document.querySelector('#steps')
     const section3 = document.querySelector('#ingredients')
+    const recipe_tags = document.querySelector('#tags')
     recipe_data.forEach(element => {
+      console.log(element.tags);
       const resizedImage = `data:image/png;base64,${element.image}`;
         let html = '';
         let html2 = '';
         let html3 = '';
+        let tag_section = '';
         if(element.RecipeID == recipe_id){
             try{
                 html +=`
@@ -77,6 +80,19 @@ fetch('/details', {
   </div>
     `;
     recipe_name.innerHTML = html;
+    
+    //Recipe tags
+    const tags = element.tags;
+    const tagsArray = tags.split(',');
+    for(let i=0; i<tagsArray.length; i++){
+      let tag = tagsArray[i];
+      tag_section += `
+      <a id="filter" class="uk-display-inline-block" href="index.html?id=${tag}"><span id="filter" class="uk-label uk-label-light rounded">${tag}</span></a>
+      `;
+      recipe_tags.innerHTML = tag_section;
+    }
+
+    //Recipe Instructions
     const instructions = element.RecipeInstructions
     const lines = instructions.split('\n');
     for(let i=0; i<lines.length; i++){
@@ -92,11 +108,10 @@ fetch('/details', {
     <div class="uk-step-content" id="step-${i}">${step}</div>
   </div>
  </div>
-  
     `;
     section2.innerHTML = html2;
     }
-    // let IngredientName = [];
+    //Recipe Ingredients
     ingredient_data.forEach(ingredientArray => {
       ingredientArray.forEach(ingredient =>{
         html3 += `
