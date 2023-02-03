@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'TheLittleGreenLarder'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0F0DD0A99F1447A8AF3C4F91778ABA30 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C41B3828F2114903B4C4E88765C129FD }}
           package: .
