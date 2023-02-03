@@ -136,6 +136,44 @@ app.post('/subscribe', (req, res) => {
         });
     });
 });
+//filter data with tags
+app.post('/filter', (req, res) => {
+    const tags = req.body.tags;
+    if(!tags){
+        console.log('No tags provided');
+        return res.status(400).send({error: 'No tags provided'});
+    }
+    console.log(tags);
+    db.connect(config, (err) => {
+        if (err) {
+            console.error('Error connecting to database:', err);
+            return res.status(500).send({ error: 'Error connecting to database' });
+        }
+        console.log('Connected to database');
+        //create a new request object
+        let sqlRequest = new db.Request();
+        //query the database and get the records
+        let sqlQuery = "Select * From Recipes Where CHARINDEX(',' + '" + tags + "' + ',', ',' + Tags + ',') > 0";
+        sqlRequest.query(sqlQuery, function(err, data){
+            if (err) {
+                console.error('Error querying database:', err);
+                return res.status(500).send({ error: 'Error querying database' });
+            }
+            const Recipes = data.recordset.map(async recipe=>{
+                const resizedImage = await sharp(recipe.image).resize(300,160).toBuffer();
+                recipe.image = Buffer.from(resizedImage).toString('base64');
+                return recipe;
+            }
+            );
+            Promise.all(Recipes)
+            .then(Recipes => {
+                console.log('Recipes successfully retrieved from database');
+                res.status(200).send(Recipes);
+                db.close();
+            })
+        });
+    });
+});
 
 
 app.get('/', (req, res) => {
@@ -165,7 +203,10 @@ app.get('/src/js/index.js',(req, res) => {
 });
 app.get('/src/js/recipe.js',(req, res) => {
     res.sendFile(path.join(__dirname, '/src/js/recipe.js'));
-});   
+});
+app.get('/src/js/filter.js',(req, res) => {
+    res.sendFile(path.join(__dirname, '/src/js/filter.js'));
+});
 //alow user to send upto 100 messages under an hour
 const limiter = new rateLimiter.RateLimiterMemory({
     points: 100,
