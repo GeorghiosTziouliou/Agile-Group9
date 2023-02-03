@@ -45,20 +45,20 @@ app.get('/recipes', (req, res) => {
       });
     });
   });
-
   //Adding recipes
 
     app.post('/AddRecipes', (req, res) => {
         const RecipeName = String(req.body.NameOfRecipe);
         const Ingredients = String(req.body.Ingredients);
         const RecipeInstructions = String(req.body.Instructions);
-        const RecipeImage = String(req.body.Image);
+        const RecipeImage = Buffer.from(req.body.Image, 'binary');
         const serving_size = String(req.body.ServingSize);
         const Unit = String(req.body.Unit);
         console.log(RecipeName);
         console.log(RecipeInstructions);
-       
 
+        //convert image to buffer
+       
         db.connect(config, (err) => {
             if (err) {
                 console.error('Error connecting to database:', err);
@@ -79,9 +79,8 @@ app.get('/recipes', (req, res) => {
             else{
                 
                 console.log('Success');
-                res.status(200).send(data.recordset);
                 //queary the other table in the database
-                let sqlQuery = "INSERT INTO Ingredients (IngredientID , IngredientUnit) VALUES ('" + RecipeName + "', '" + Unit + "')";
+                let sqlQuery = "INSERT INTO Ingredients (IngredientName , IngredientUnit) VALUES ('" + Ingredients + "', '" + Unit + "')";
                 sqlRequest.query(sqlQuery,function(err,data){
                     if(err){
                         console.error('Error querying database:', err);
@@ -89,7 +88,6 @@ app.get('/recipes', (req, res) => {
                     }
                     else{
                         console.log('Success');
-                        res.status(200).send(data.recordset);
                         db.close();
                     }
                 })
@@ -99,6 +97,7 @@ app.get('/recipes', (req, res) => {
 
 
           });
+          
         });
 
 
