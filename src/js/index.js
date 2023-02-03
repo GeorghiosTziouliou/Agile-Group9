@@ -1,15 +1,42 @@
-fetch('/recipes', {
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/json'  
-    },
-})
+let searchParams = new URLSearchParams(location.search);
+let result = searchParams.get('id');
+
+let fetchPromise;
+if(!result){
+    fetchPromise = fetch('/recipes', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'  
+        },
+    });
+}else{
+    const filter = result.split('?')[0];
+    console.log(filter);
+    fetchPromise = fetch(`/filter`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          tags:filter
+        })
+    });
+}
+fetchPromise
+// fetch('/recipes', {
+//     method: 'GET',
+//     headers: {
+//         'Content-Type': 'application/json'  
+//     },
+// })
 .then(res => res.json())
 .then(data => {
     console.log(data);
     const recipe = data;
+    const perpage = 12;
+    const pages = recipe.slice(0, perpage);
     const recipeList = document.querySelector('#recipe-list');
-    recipe.forEach(recipe => {
+    pages.forEach(recipe => {
         const resizedImage = `data:image/png;base64,${recipe.image}`;
         let html = '';
         try{
@@ -31,7 +58,7 @@ fetch('/recipes', {
                     <span class="uk-margin-xsmall-left">5.0</span>
                     <span>(73)</span>
                   </div>
-                  <div class="uk-width-expand uk-text-right">by Mamba</div>
+                  <div class="uk-width-expand uk-text-right">Little Green</div>
                 </div>
               </div>
               <a href="recipe.html?id=${recipe.RecipeID}" class="uk-position-cover"></a>

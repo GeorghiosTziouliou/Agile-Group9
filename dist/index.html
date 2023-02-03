@@ -84,18 +84,19 @@
       else if (currentTime >= 10 && currentTime < 18) {
         status.innerHTML = "OPEN";
         status.className = "indicator-item rounded-start border-start-0 bg-black badge badge-secondary m-10 px-5 pl-4 p-4";
+        if(currentTime >=17 && currentTime <18){
+          status.innerHTML = "CLOSES " + " " + "IN" + " " + mins.toString() + " " + "MINUTES";
+          status.className = "indicator-item rounded-start border-start-0 bg-black badge badge-secondary m-20 my-10 mx-10.0 pl-10.0 p-4 mr-6.0";
+        }
       } else {
         status.innerHTML = "CLOSED";
         status.className = "indicator-item rounded-start border-start-0 bg-black badge badge-secondary m-10 px-5 pl-4 p-4";
         if(currentTime >=9 && currentTime < 10){
           status.innerHTML = "OPENS " + " " + "IN" + " " + mins.toString() + " " + "MINUTES";
           status.className = "indicator-item rounded-start border-start-0 bg-black badge badge-secondary m-20 my-10 mx-10.0 pl-10.0 p-4 mr-6.0";
-        }else if(currentTime >=17 && currentTime <18){
-          status.innerHTML = "CLOSES " + " " + "IN" + " " + mins.toString() + " " + "MINUTES";
-          status.className = "indicator-item rounded-start border-start-0 bg-black badge badge-secondary m-20 my-10 mx-10.0 pl-10.0 p-4 mr-6.0";
+        }
         }
       }
-    }
   
     updateStatus();
     setInterval(updateStatus, 1000);
