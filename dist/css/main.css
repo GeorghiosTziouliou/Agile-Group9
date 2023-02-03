@@ -10893,3 +10893,13 @@ iframe.uk-cover {
     page-break-after: avoid;
   }
 }
+<!-- line for image -->
+.uk-padding-smalli{
+	padding:75px;
+}
+
+@media (max-width:1000px){
+	.uk-padding-smalli{
+		display: none;
+	}
+}
