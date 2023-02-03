@@ -8974,15 +8974,7 @@ iframe.uk-cover {
   }
 }
 
-.uk-padding-smalli{
-	padding:75px;
-}
 
-@media (max-width:1000px){
-	.uk-padding-smalli{
-		display: none;
-	}
-}
 
 /* Remove
  ========================================================================== */
@@ -10909,4 +10901,14 @@ iframe.uk-cover {
   h3 {
     page-break-after: avoid;
   }
+}
+
+.uk-padding-smalli{
+	padding:75px;
+}
+
+@media (max-width:1000px){
+	.uk-padding-smalli{
+		display: none;
+	}
 }
