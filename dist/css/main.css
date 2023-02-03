@@ -4761,6 +4761,14 @@ ul.uk-nav-sub {
   position: relative;
 }
 
+/*
+ * Background colour on tab hover (About Us page)
+ */
+.uk-tab-nav > li > a:hover {
+  background-color: #1c8b18;
+}
+
+
 /* Items
  ========================================================================== */
 /*
@@ -8425,6 +8433,12 @@ iframe.uk-cover {
   }
 }
 
+@media(max-width: 800px){
+	uk-limted{
+		display: none;
+	}
+}
+	
 /*
  * Align items in the cross axis of the current line of the flex container
  * Row: Vertical
@@ -8946,6 +8960,7 @@ iframe.uk-cover {
   padding: 15px;
 }
 
+
 /* Large
  ========================================================================== */
 .uk-padding-large {
@@ -8957,6 +8972,16 @@ iframe.uk-cover {
   .uk-padding-large {
     padding: 70px;
   }
+}
+
+.uk-padding-smalli{
+	padding:75px;
+}
+
+@media (max-width:1000px){
+	.uk-padding-smalli{
+		display: none;
+	}
 }
 
 /* Remove
