@@ -89,9 +89,21 @@ fetchPromise
           localStorage.setItem("likedRecipes", JSON.stringify(likedRecipes));
           }
           //delete already deleted items
-          localStorage.removeItem(savedRecipes);
-          console.log("Already exists");
-          console.log(likedRecipes);
+          var deletedRecipes = JSON.parse(localStorage.getItem("deletedRecipes"));
+          if(deletedRecipes == null){
+            deletedRecipes = [];
+          }
+          var recipeExists = deletedRecipes.some(function(el){
+            return el.id === recipeId;
+          });
+          if(recipeExists){
+            console.log("Exists, Deleting");
+            deletedRecipes = deletedRecipes.filter(function(el){
+              return el.id !== recipeId;
+            });
+          }
+          localStorage.setItem("deletedRecipes", JSON.stringify(deletedRecipes));
+          localStorage.removeItem(deletedRecipes);
           //change icon
           $(this).attr("data-uk-icon", "heart");
           //change color

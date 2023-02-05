@@ -28,6 +28,9 @@ fetch('/details', {
     recipe_data.forEach(element => {
       console.log(element.tags);
       const resizedImage = `data:image/png;base64,${element.image}`;
+      const recipeNmes = element.RecipeName;
+      const recipeImages = element.RecipeImage;
+      const recipeId = element.RecipeID
         let html = '';
         let html2 = '';
         let html3 = '';
@@ -77,10 +80,55 @@ fetch('/details', {
       </div>
     </div>
   </div>
+  <script>
+  const likeButton = document.querySelector('.like_recipe');
+  likeButton.addEventListener('click', function() {
+    const recipe = {
+      name: '${element.RecipeName}',
+      image: '${resizedImage}',
+      servingSize: '${element.serving_size}'
+    };
+    localStorage.setItem('recipe', JSON.stringify(recipe));
+
+    likeButton.setAttribute('data-uk-icon', 'icon: check; ratio: 1.2');
+    likeButton.setAttribute('data-uk-tooltip', 'title: Recipe Saved');
+    likeButton.setAttribute('class', 'uk-icon-link');
+
+    likeButton.setAttribute('style', 'color: #4caf50');
+
+  });
+</script>
     `;
+    recipe_name.innerHTML = html;
     // <a href="#" class="uk-icon-link uk-margin-left" data-uk-icon="icon: cart; ratio: 1.2" 
     //          data-uk-tooltip="title: Shopping List"></a>
-    recipe_name.innerHTML = html;
+    // const likeButton = document.querySelector('.like_recipe');
+    // likeButton.addEventListener('click', function() {
+    //   console.log('clicked');
+    //   //get recipe id
+    //   var likedRecipes = JSON.parse(localStorage.getItem("likedRecipes"));
+    //   if(likedRecipes == null) {
+    //     likedRecipes = [];
+    //   }
+    //   //get recipe data
+    //   const recipe = {
+    //     id: recipeId,
+    //     image: recipeImages,
+    //     name: recipeNmes
+    //   };
+    //   //push
+    //   likedRecipes.push(recipe);
+    //   //set
+    //   localStorage.setItem('likedRecipes', JSON.stringify(likedRecipes));
+      // //change icon
+      // likeButton.setAttribute('data-uk-icon', 'icon: check; ratio: 1.2');
+      // likeButton.setAttribute('data-uk-tooltip', 'title: Recipe Saved');
+      // likeButton.setAttribute('class', 'uk-icon-link');
+
+      // //change color
+      // likeButton.setAttribute('style', 'color: #4caf50');
+
+    // }); 
     //Recipe tags
     const tags = element.tags;
     const tagsArray = tags.split(',');
@@ -126,24 +174,7 @@ fetch('/details', {
             }
         }
     });
-    const likeButton = document.querySelector('.like_recipe');
-    likeButton.addEventListener('click', function() {
-      console.log('clicked');
-      const recipe = {
-        name: '${element.RecipeName}',
-        image: '${resizedImage}',
-        servingSize: '${element.serving_size}'
-      };
-      localStorage.setItem('recipe', JSON.stringify(recipe));
-      //change icon
-      likeButton.setAttribute('data-uk-icon', 'icon: check; ratio: 1.2');
-      likeButton.setAttribute('data-uk-tooltip', 'title: Recipe Saved');
-      likeButton.setAttribute('class', 'uk-icon-link');
-
-      //change color
-      likeButton.setAttribute('style', 'color: #4caf50');
-
-    }); 
+    
 })
 //take some of the tags, send them to the database to get more recipes like this and display this recipes to the user
 //more like this section
