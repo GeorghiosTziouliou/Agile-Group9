@@ -33,7 +33,7 @@ $(document).ready(function() {
                         <div class="uk-width-expand uk-text-right">Little Green</div>
                     </div>
                     </div>
-                    <a href="recipe.html?id=${recipeId}" class="uk-position-cover"></a>
+                    <a href="recipe.html?id=${recipeId.id}" class="uk-position-cover"></a>
                 </div>
                 </div>`;
                 recipeList.innerHTML += html;
