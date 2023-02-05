@@ -214,6 +214,9 @@ app.get('/src/js/filter.js',(req, res) => {
 app.get('/src/js/save.js',(req, res) => {
     res.sendFile(path.join(__dirname, '/src/js/save.js'));
 });
+app.get('//src/js/morelike.js',(req, res) => {
+    res.sendFile(path.join(__dirname, '/src/js/morelike.js'));
+});
 //alow user to send upto 100 messages under an hour
 const limiter = new rateLimiter.RateLimiterMemory({
     points: 100,
