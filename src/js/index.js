@@ -45,7 +45,7 @@ fetchPromise
                 <img class="uk-border-rounded-medium" src="${resizedImage}" alt="Course Title">
                 <div class="uk-position-cover uk-card-overlay uk-border-rounded-medium"></div>
                 <div class="uk-position-xsmall uk-position-top-right">
-                  <a href="#" class="uk-icon-button uk-like uk-position-z-index uk-position-relative"
+                  <a class="like uk-icon-button uk-like uk-position-z-index uk-position-relative"
                     data-uk-icon="heart"></a>
                 </div>
               </div>
@@ -55,7 +55,7 @@ fetchPromise
                   <div class="uk-width-auto uk-flex uk-flex-middle">
                     <span class="uk-rating-filled" data-uk-icon="icon: star; ratio: 0.7"></span>
                     <span class="uk-margin-xsmall-left">5.0</span>
-                    <span>(73)</span>
+                    <span>(73)</span>3
                   </div>
                   <div class="uk-width-expand uk-text-right">Little Green</div>
                 </div>
@@ -69,5 +69,59 @@ fetchPromise
             console.log(err);
         }
     })
-    
-    });
+    $(document).ready(function() {
+      $(".like").click(function() {
+          var recipeId = $(this).closest(".uk-card").find("a[href^='recipe.html?id=']").attr("href").split("=")[1];
+          var recipeImage = $(this).closest(".uk-card").find("img").attr("src");
+          var recipeName = $(this).closest(".uk-card").find(".uk-card-title").text();
+          //add all this details on the local storage 'likedRecipes'
+          var likedRecipes = JSON.parse(localStorage.getItem("likedRecipes"));
+          if(likedRecipes == null){
+            likedRecipes = [];
+          }
+          var recipe = {
+            id: recipeId,
+            image: recipeImage,
+            name: recipeName
+          };
+          var recipeExists = likedRecipes.some(function(el){
+            return el.id === recipeId;
+          });
+          if(!recipeExists){
+            console.log("Does not exist, Adding");
+          likedRecipes.push(recipe);
+          localStorage.setItem("likedRecipes", JSON.stringify(likedRecipes));
+          }
+          console.log("Already exists");
+          console.log(likedRecipes);
+          //change icon
+          $(this).attr("data-uk-icon", "heart");
+          //change color
+          $(this).css("color", "red");
+
+      });
+  });
+});
+
+
+
+
+//           // //check if the recipe is already liked/saved in the local storage
+//           // var likedRecipes = JSON.parse(localStorage.getItem("likedRecipes"));
+//           // if(likedRecipes == null){
+//           //   likedRecipes = [];
+//           //   console.log("likedRecipes is null");
+//           // }
+//           // //add the current recipe to the saved items array
+//           // likedRecipes.push(recipeId);
+//           // //save the array to the local storage
+//           // localStorage.setItem("likedRecipes", JSON.stringify(likedRecipes));
+//           // console.log(likedRecipes);
+//           // //change icon
+//           // $(this).attr("data-uk-icon", "heart");
+//           // //change color
+//           // $(this).css("color", "red");
+
+//       });
+//   });
+// });

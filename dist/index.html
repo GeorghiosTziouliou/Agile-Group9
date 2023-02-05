@@ -12,6 +12,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="css/main.css" />
   <script src="js/uikit.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body class="bg-white">
@@ -110,44 +111,57 @@
         <div class="uk-width-1-4@m sticky-container">
           <div data-uk-sticky="offset: 100; bottom: true; media: @m;">
             <h2>Recipes</h2>
-            <ul class="uk-nav-default uk-nav-parent-icon uk-nav-filter uk-margin-medium-top" data-uk-nav>
+            <ul id="Filterin" class="uk-nav-default uk-nav-parent-icon uk-nav-filter uk-margin-medium-top" data-uk-nav>
               <li class="uk-parent uk-open">
-                <a href="#">Dish Type</a>
+                <a>Dish Type</a>
                 <ul class="uk-nav-sub">
                   
                 </ul>
               </li>
               <li class="uk-parent">
-                <a href="#">Meal Type</a>
+                <a>Meal Type</a>
                 <ul class="uk-nav-sub">
-                  <li><a href="#">Breakfast</a></li>
+                  <li><a>Breakfast</a></li>
                 </ul>
               </li>
               <li class="uk-parent">
-                <a href="#">Diet and Health</a>
+                <a>Diet and Health</a>
                 <ul class="uk-nav-sub">
-                  <li><a href="#">Gluten Free</a></li>
-                  <li><a href="#">High Fiber Recipes</a></li>                
+                  <li><a>Gluten Free</a></li>
+                  <li><a>Low Calorie</a></li>
+                  <li><a>Healthy</a></li>
+                  <li><a>High Fiber Recipes</a></li>                
                 </ul>
               </li>
               <li class="uk-parent">
-                <a href="#">World Cuisine</a>
+                <a>World Cuisine</a>
                 <ul class="uk-nav-sub">
-                  <li><a href="#">Chinese</a></li>
-                  <li><a href="#">Indian</a></li>
-                  <li><a href="#">Mexican</a></li>
+                  <li><a>Chinese</a></li>
+                  <li><a>IndianCuisine</a></li>
+                  <li><a>Mexican</a></li>
                 </ul>
               </li>
               <li class="uk-parent">
-                <a href="#">Seasonal</a>
+                <a>Seasonal</a>
                 <ul class="uk-nav-sub">
-                  <li><a href="#">Baby Shower</a></li>
-                  <li><a href="#">Halloween</a></li>
+                  <li><a>Baby Shower</a></li>
+                  <li><a>Halloween</a></li>
                 </ul>
               </li>
             </ul>
           </div>
         </div>
+
+        <script>
+          $(document).ready(function() {
+             $("#Filterin .uk-nav-sub a").click(function() {
+              var ClickedCategory = $(this).text();
+               console.log(ClickedCategory);
+               window.location.href = "index.html?id= " + encodeURIComponent(ClickedCategory);
+              });
+           });
+        </script>
+
         <div class="uk-width-expand@m">
           <div data-uk-grid>
             <div class="uk-width-expand@m">
@@ -157,13 +171,13 @@
                   placeholder="Search for recipes...">
               </form>
             </div>
-            <div class="uk-width-1-3@m uk-text-right@m uk-light">
+            <!-- <div class="uk-width-1-3@m uk-text-right@m uk-light">
               <select class="uk-select uk-select-light uk-width-auto uk-border-pill uk-select-primary">
                 <option>Sort by: Latest</option>
                 <option>Sort by: Top Rated</option>
                 <option>Sort by: Trending</option>
               </select>
-            </div>
+            </div> -->
           </div>
 
           <div id="recipe-list" class="uk-child-width-1-2 uk-child-width-1-3@s" data-uk-grid>
@@ -907,31 +921,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="uk-child-width-1-2@s uk-child-width-1-4@m" data-uk-grid>
-			<div>
-				<ul class="uk-list uk-text-small">
-					<li><a class="uk-link-text" href="#">Giving Back</a></li>
-				</ul>
-			</div>
-			<div>
-				<ul class="uk-list uk-text-small">
-					<li><a class="uk-link-text" href="#">Work With Us</a></li>
-				</ul>
-			</div>
-			<div>
-				<ul class="uk-list uk-text-small">
-					<li><a class="uk-link-text" href="contact.html">Contact Form</a></li>
-				</ul>
-			</div>
-			<div>
-				<ul class="uk-list uk-text-small">
-					<li><a class="uk-link-text" href="#">Visit Us</a></li>
-				</ul>
-			</div>
-		</div>
 		<div class="uk-text-center uk-text-small uk-text-muted uk-margin-medium-top">
       <p class="uk-margin-remove">© 2020 The Little Green Larder. All rights reserved.</p>
 	</div>
+  </div>
 </footer>
 
 <div id="offcanvas" data-uk-offcanvas="flip: true; overlay: true">
