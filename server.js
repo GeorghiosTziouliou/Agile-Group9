@@ -187,6 +187,7 @@ app.get('/contact.html', (req, res) =>{
     res.sendFile(path.join(__dirname, '/dist/contact.html'));
 })
 app.get('/dist/css/main.css',(req, res)=>{
+    res.set('Content-Type', 'text/css');
     res.sendFile(path.join(__dirname, '/dist/css/main.css'));
 });
 app.get('/dist/js/app.js',(req, res) =>{
