@@ -23,12 +23,6 @@ if(!result){
     });
 }
 fetchPromise
-// fetch('/recipes', {
-//     method: 'GET',
-//     headers: {
-//         'Content-Type': 'application/json'  
-//     },
-// })
 .then(res => res.json())
 .then(data => {
     console.log(data);
@@ -37,6 +31,10 @@ fetchPromise
     // const categories = document.querySelector('#categories');
     recipe.forEach(recipe => {
         const resizedImage = `data:image/png;base64,${recipe.image}`;
+        // const tags = recipe.tags;
+        // const tagsArray = tags.split(',');
+        // const tag = tagsArray[1];
+        // console.log('tag:' + tag);
         let html = '';
         try{
             html += `<div>
@@ -53,9 +51,7 @@ fetchPromise
                 <h3 class="uk-card-title uk-text-500 uk-margin-small-bottom uk-margin-top">${recipe.RecipeName}</h3>
                 <div class="uk-text-xsmall uk-text-muted" data-uk-grid>
                   <div class="uk-width-auto uk-flex uk-flex-middle">
-                    <span class="uk-rating-filled" data-uk-icon="icon: star; ratio: 0.7"></span>
-                    <span class="uk-margin-xsmall-left">5.0</span>
-                    <span>(73)</span>3
+                    <span class="uk-margin-xsmall-left"></span>
                   </div>
                   <div class="uk-width-expand uk-text-right">Little Green</div>
                 </div>
@@ -92,6 +88,8 @@ fetchPromise
           likedRecipes.push(recipe);
           localStorage.setItem("likedRecipes", JSON.stringify(likedRecipes));
           }
+          //delete already deleted items
+          localStorage.removeItem(savedRecipes);
           console.log("Already exists");
           console.log(likedRecipes);
           //change icon
@@ -102,26 +100,3 @@ fetchPromise
       });
   });
 });
-
-
-
-
-//           // //check if the recipe is already liked/saved in the local storage
-//           // var likedRecipes = JSON.parse(localStorage.getItem("likedRecipes"));
-//           // if(likedRecipes == null){
-//           //   likedRecipes = [];
-//           //   console.log("likedRecipes is null");
-//           // }
-//           // //add the current recipe to the saved items array
-//           // likedRecipes.push(recipeId);
-//           // //save the array to the local storage
-//           // localStorage.setItem("likedRecipes", JSON.stringify(likedRecipes));
-//           // console.log(likedRecipes);
-//           // //change icon
-//           // $(this).attr("data-uk-icon", "heart");
-//           // //change color
-//           // $(this).css("color", "red");
-
-//       });
-//   });
-// });
