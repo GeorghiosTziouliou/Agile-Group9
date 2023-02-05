@@ -178,6 +178,7 @@ app.post('/filter', (req, res) => {
     });
 });
 
+//retrieved the saved saveditems from the db using the product id
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/views/index.ejs'));
@@ -209,6 +210,9 @@ app.get('/src/js/recipe.js',(req, res) => {
 });
 app.get('/src/js/filter.js',(req, res) => {
     res.sendFile(path.join(__dirname, '/src/js/filter.js'));
+});
+app.get('/src/js/save.js',(req, res) => {
+    res.sendFile(path.join(__dirname, '/src/js/save.js'));
 });
 //alow user to send upto 100 messages under an hour
 const limiter = new rateLimiter.RateLimiterMemory({
