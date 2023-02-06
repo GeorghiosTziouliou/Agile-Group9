@@ -35,7 +35,7 @@ app.get('/recipes', (req, res) => {
         console.error('Error connecting to database:', err);
         return res.status(500).send({ error: 'Error connecting to database' });
       }
-      console.log('Connected to database');
+      console.log(req.connection.remoteAddress, 'Successfully Connected to database');
       //create a new request object
       let sqlRequest = new db.Request();
       //query the database and get the records
@@ -142,7 +142,7 @@ app.post('/subscribe', (req, res) => {
             console.error('Error connecting to database:', err);
             return res.status(500).send({ error: 'Error connecting to database' });
         }
-        console.log('Connected to database');
+        console.log(req.connection.remoteAddress, 'Successfully Connected to database');
         //create a new request object
         let sqlRequest = new db.Request();
         //query the database and get the records
@@ -171,7 +171,7 @@ app.post('/filter', (req, res) => {
             console.error('Error connecting to database:', err);
             return res.status(500).send({ error: 'Error connecting to database' });
         }
-        console.log('Connected to database');
+        console.log(req.connection.remoteAddress, 'Successfully Connected to database');
         //create a new request object
         let sqlRequest = new db.Request();
         //query the database and get the records
